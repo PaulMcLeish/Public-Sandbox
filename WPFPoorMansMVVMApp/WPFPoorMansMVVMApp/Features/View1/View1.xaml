@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
+        <!-- Set DataContext to ViewModel -->
         <local:View1VM />
     </UserControl.DataContext>
     <Grid Margin="3">

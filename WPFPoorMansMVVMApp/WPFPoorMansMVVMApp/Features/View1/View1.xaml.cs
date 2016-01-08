@@ -28,7 +28,8 @@ namespace WPFPoorMansMVVMApp.Features.View1
             get { return (View1VM)GetValue(View1VMProperty); }
             set
             {
-                int i = value.GetHashCode();
+                // Set Datacontext of view to viewmodel passed in
+                // Allows parent to bind property to composed view datacontext
                 this.DataContext = value;
                 SetValue(View1VMProperty, value);
             }

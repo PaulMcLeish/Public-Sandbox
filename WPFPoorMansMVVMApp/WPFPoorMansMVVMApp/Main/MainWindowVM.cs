@@ -26,8 +26,6 @@ namespace WPFPoorMansMVVMApp.Main
             {
                 if (view1 != value)
                 {
-                    int ch = view1.GetHashCode();
-                    int nh = value.GetHashCode();
                     view1 = value;
                     NotifyPropertyChanged("View1");
                 }

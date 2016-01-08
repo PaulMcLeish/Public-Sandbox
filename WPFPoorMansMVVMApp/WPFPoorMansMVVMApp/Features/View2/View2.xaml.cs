@@ -26,7 +26,13 @@ namespace WPFPoorMansMVVMApp.Features.View2
         public View2VM View2VM
         {
             get { return (View2VM)GetValue(View2VMProperty); }
-            set { SetValue(View2VMProperty, value); }
+            set
+            {
+                // Set Datacontext of view to viewmodel passed in
+                // Allows parent to bind property to composed view datacontext
+                this.DataContext = value;
+                SetValue(View2VMProperty, value);
+            }
         }
 
         public View2()
