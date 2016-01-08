@@ -22,28 +22,12 @@ namespace WPFPoorMansMVVMApp.Main
         public View1VM View1
         {
             get { return view1; }
-            set
-            {
-                if (view1 != value)
-                {
-                    view1 = value;
-                    NotifyPropertyChanged("View1");
-                }
-            }
         }
 
         private View2VM view2 = new View2VM();
         public View2VM View2
         {
             get { return view2; }
-            set
-            {
-                if (view2 != value)
-                {
-                    view2 = value;
-                    NotifyPropertyChanged("View2");
-                }
-            }
         }
 
         public int Id
