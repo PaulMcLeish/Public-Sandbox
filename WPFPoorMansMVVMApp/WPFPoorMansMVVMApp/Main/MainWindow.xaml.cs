@@ -26,12 +26,6 @@ namespace WPFPoorMansMVVMApp
         public MainWindow()
         {
             InitializeComponent();
-            var vm = this.DataContext as MainWindowVM;
-
-            // Set DataContext of composed views to viewmodel properties exposed from datacontext of mainwindow
-            // This sets the ViewModel of the composed object to the instance referenced by the mainwindow viewmodel
-            this.view1.View1VM = vm.View1;
-            this.view2.View2VM = vm.View2;
         }
     }
 }

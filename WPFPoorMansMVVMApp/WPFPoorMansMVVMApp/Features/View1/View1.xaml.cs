@@ -20,21 +20,6 @@ namespace WPFPoorMansMVVMApp.Features.View1
     /// </summary>
     public partial class View1 : UserControl
     {
-        public static readonly DependencyProperty View1VMProperty =
-            DependencyProperty.Register("View1VM", typeof(View1VM), typeof(View1), new PropertyMetadata(null));
-
-        public View1VM View1VM
-        {
-            get { return (View1VM)GetValue(View1VMProperty); }
-            set
-            {
-                // Set Datacontext of view to viewmodel passed in
-                // Allows parent to bind property to composed view datacontext
-                this.DataContext = value;
-                SetValue(View1VMProperty, value);
-            }
-        }
-
         public View1()
         {
             InitializeComponent();

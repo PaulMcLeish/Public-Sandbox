@@ -8,8 +8,6 @@
     {
         public View1VM()
         {
-            int i = this.GetHashCode();
-            int j = 0;
         }
 
         private View1DM dataModel = new View1DM();
