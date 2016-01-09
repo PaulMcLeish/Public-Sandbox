@@ -11,4 +11,6 @@
 ## WPFPoorMansMVVMApp (Visual Studio 2015)
 1. Target Framework .Net 4.5.2
 1. Attempts to demonstrates View First MVVM without any extra packages
-1. Demonstrates Composed Views
+1. Demonstrates Composed Views (Enables View Reuseability) 
+1. Binding to Commands in View Model
+1. Binding Key Gestures to Commands
