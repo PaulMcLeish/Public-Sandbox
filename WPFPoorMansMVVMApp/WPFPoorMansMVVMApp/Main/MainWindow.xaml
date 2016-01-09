@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Title="Main Window"
-    Height="700" Width="350"
-    MinHeight="650" MinWidth="350"
+    Height="470" Width="600"
+    MinHeight="470" MinWidth="600"
     xmlns:local="clr-namespace:WPFPoorMansMVVMApp.Main"
     xmlns:v1="clr-namespace:WPFPoorMansMVVMApp.Features.View1"
     xmlns:v2="clr-namespace:WPFPoorMansMVVMApp.Features.View2"
@@ -16,22 +16,38 @@
         <!-- Set DataContext to ViewModel -->
         <local:MainWindowVM />
     </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="CTRL+1" Command="{Binding Btn1Command}" CommandParameter="{Binding Message}" />
+        <KeyBinding  Gesture="CTRL+2" Command="{Binding Btn2Command}" />
+    </Window.InputBindings>
+
     <Grid Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <GroupBox Margin="3" Grid.Row="0" Header="Main">
+        <!-- Main -->
+        <GroupBox Margin="3" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Main">
             <Grid Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <GroupBox Margin="3" Grid.Row="0" Header="Main VM Properties">
+                <GroupBox Margin="3" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Main VM Properties">
                     <Grid Margin="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -54,7 +70,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Margin="3" Grid.Row="1" Header="Main.View1 VM Properties">
+                <GroupBox Margin="3" Grid.Row="1" Grid.Column="0" Header="Main.View1 VM Properties">
                     <Grid Margin="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -77,7 +93,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Margin="3" Grid.Row="2" Header="Main.View2 VM Properties">
+                <GroupBox Margin="3" Grid.Row="1" Grid.Column="1" Header="Main.View2 VM Properties">
                     <Grid Margin="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -100,19 +116,60 @@
                     </Grid>
                 </GroupBox>
             </Grid>
-            
-            
         </GroupBox>
 
-        <GroupBox Margin="3" Grid.Row="1" Header="View 1 User Control">
+        <!-- User Control: View1 -->
+        <GroupBox Margin="3" Grid.Row="1" Grid.Column="0" Header="View 1 User Control">
             <!-- Bind Parents child view model to data context of child object -->
             <v1:View1 x:Name="view1" DataContext="{Binding View1}"/>
         </GroupBox>
 
-        <GroupBox Margin="3" Grid.Row="2" Header="View 2 User Control">
+        <!-- User Control: View2 -->
+        <GroupBox Margin="3" Grid.Row="1" Grid.Column="1" Header="View 2 User Control">
             <!-- Bind Parents child view model to data context of child object -->
             <v2:View2 x:Name="view2" DataContext="{Binding View2}"/>
         </GroupBox>
 
+        <!-- Buttons -->
+        <GroupBox Margin="3" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Buttons">
+            <Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Button 1 -->
+                <CheckBox
+                    Margin="3"
+                    Grid.Column="0"
+                    IsChecked="{Binding Btn1CanExecute}"
+                    Content="Toggle Btn1"
+                    VerticalAlignment="Center" />
+                <Button
+                    Margin="3"
+                    Grid.Column="1"
+                    Command="{Binding Btn1Command}"
+                    CommandParameter="{Binding Message}"
+                    Content="Btn 1"
+                    ToolTip="Ctrl+1" />
+
+                <!-- Button 2 -->
+                <CheckBox
+                    Margin="3"
+                    Grid.Column="2"
+                    IsChecked="{Binding Btn2CanExecute}"
+                    Content="Toggle Btn2"
+                    VerticalAlignment="Center" />
+                <Button
+                    Margin="3"
+                    Grid.Column="3"
+                    Command="{Binding Btn2Command}"
+                    Content="Btn 2"
+                    ToolTip="Ctrl+2" />
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

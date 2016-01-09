@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFPoorMansMVVMApp.Common;
-using WPFPoorMansMVVMApp.Features.View1;
-using WPFPoorMansMVVMApp.Features.View2;
-using WPFPoorMansMVVMApp.Helpers;
-
-namespace WPFPoorMansMVVMApp.Main
+﻿namespace WPFPoorMansMVVMApp.Main
 {
+    using System;
+    using Common;
+    using Features.View1;
+    using Features.View2;
+    using Helpers;
+    using System.Windows.Input;
+    using System.Windows;
+
     public class MainWindowVM : BaseVM
     {
+        public MainWindowVM()
+        {
+            btn1Command = new RelayCommand(Btn1Execute, param => Btn1CanExecute);
+            btn2Command = new RelayCommand(Btn2Execute, param => Btn2CanExecute);
+        }
+
         private MainWindowDM dataModel = new MainWindowDM();
         public MainWindowDM DataModel
         {
@@ -67,6 +71,58 @@ namespace WPFPoorMansMVVMApp.Main
                     NotifyPropertyChanged("Message");
                 }
             }
+        }
+
+        private ICommand btn1Command;
+        public ICommand Btn1Command
+        {
+            get { return btn1Command; }
+            set { btn1Command = value; }
+        }
+
+        private bool btn1CanExecute = true;
+        public bool Btn1CanExecute
+        {
+            get { return btn1CanExecute; }
+            set
+            {
+                if (btn1CanExecute != value)
+                {
+                    btn1CanExecute = value;
+                    NotifyPropertyChanged("Btn1CanExecute");
+                }
+            }
+        }
+
+        public void Btn1Execute(object msg)
+        {
+            MessageBox.Show(String.Format("Btn1Execute: '{0}'", msg.ToString()));
+        }
+
+        private ICommand btn2Command;
+        public ICommand Btn2Command
+        {
+            get { return btn2Command; }
+            set { btn2Command = value; }
+        }
+
+        private bool btn2CanExecute = true;
+        public bool Btn2CanExecute
+        {
+            get { return btn2CanExecute; }
+            set
+            {
+                if (btn2CanExecute != value)
+                {
+                    btn2CanExecute = value;
+                    NotifyPropertyChanged("Btn2CanExecute");
+                }
+            }
+        }
+
+        public void Btn2Execute()
+        {
+            MessageBox.Show(String.Format("Btn2Execute"));
         }
     }
 }
