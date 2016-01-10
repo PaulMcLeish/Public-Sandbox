@@ -14,6 +14,8 @@
         {
             btn1Command = new RelayCommand(Btn1Execute, param => Btn1CanExecute);
             btn2Command = new RelayCommand(Btn2Execute, param => Btn2CanExecute);
+
+            // Catch event triggered in Child
             view1.View1VMEvent += View1_View1VMEvent;
         }
 
