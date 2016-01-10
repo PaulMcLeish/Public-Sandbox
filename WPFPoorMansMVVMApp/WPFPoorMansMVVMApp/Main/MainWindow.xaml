@@ -5,12 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Title="Main Window"
-    Height="600" Width="600"
+    Height="500" Width="600"
     MinHeight="500" MinWidth="600"
     xmlns:local="clr-namespace:WPFPoorMansMVVMApp.Main"
     xmlns:v1="clr-namespace:WPFPoorMansMVVMApp.Features.View1"
     xmlns:v2="clr-namespace:WPFPoorMansMVVMApp.Features.View2"
-    xmlns:v3="clr-namespace:WPFPoorMansMVVMApp.Features.View3"
     Margin="3"
     >
     <Window.DataContext>
@@ -24,23 +23,20 @@
     </Window.InputBindings>
 
     <Grid Margin="3">
-        <!-- Region Definition -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!-- Endregion -->
 
         <!-- Main -->
         <GroupBox Margin="3" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Main">
             <Grid Margin="3">
-                <!-- Region Definition -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -50,11 +46,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Endregion -->
-                
+
                 <GroupBox Margin="3" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Main VM Properties">
                     <Grid Margin="3">
-                        <!-- Region Definition -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -64,7 +58,6 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <!-- Endregion -->
 
                         <TextBlock Margin="3" Grid.Row="0" Grid.Column="0" Text="Id:"/>
                         <TextBox Margin="3" Grid.Row="0" Grid.Column="1" Text="{Binding Id, StringFormat={}{0:#,#}}"/>
@@ -79,7 +72,6 @@
 
                 <GroupBox Margin="3" Grid.Row="1" Grid.Column="0" Header="Main.View1 VM Properties">
                     <Grid Margin="3">
-                        <!-- Region Definition -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -89,7 +81,6 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <!-- Endregion -->
 
                         <TextBlock Margin="3" Grid.Row="0" Grid.Column="0" Text="Id:"/>
                         <TextBox Margin="3" Grid.Row="0" Grid.Column="1" Text="{Binding View1.Id, StringFormat={}{0:#,#}}"/>
@@ -104,7 +95,6 @@
 
                 <GroupBox Margin="3" Grid.Row="1" Grid.Column="1" Header="Main.View2 VM Properties">
                     <Grid Margin="3">
-                        <!-- Region Definition -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -114,7 +104,6 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <!-- Endregion -->
 
                         <TextBlock Margin="3" Grid.Row="0" Grid.Column="0" Text="Id:"/>
                         <TextBox Margin="3" Grid.Row="0" Grid.Column="1" Text="{Binding View2.Id, StringFormat={}{0:#,#}}"/>
@@ -141,12 +130,9 @@
             <v2:View2 x:Name="view2" DataContext="{Binding View2}"/>
         </GroupBox>
 
-        <v3:View3 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan ="2"/>
-
         <!-- Buttons -->
         <GroupBox Margin="3" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Buttons">
             <Grid Margin="3">
-                <!-- Region Definition -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -154,7 +140,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Endregion -->
                 
                 <!-- Button 1 -->
                 <CheckBox
