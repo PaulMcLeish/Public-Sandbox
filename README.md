@@ -14,3 +14,4 @@
 1. Demonstrates Composed Views (Enables View Reuseability) 
 1. Binding to Commands in View Model
 1. Binding Key Gestures to Commands
+1. Bubble events from Child to Parent
