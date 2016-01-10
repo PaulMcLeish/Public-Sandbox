@@ -1,6 +1,7 @@
 ﻿namespace WPFPoorMansMVVMApp.Features.View1
 {
     using System;
+    using System.Windows.Input;
     using WPFPoorMansMVVMApp.Common;
     using WPFPoorMansMVVMApp.Helpers;
 
@@ -8,6 +9,7 @@
     {
         public View1VM()
         {
+            fireEventCommand = new RelayCommand(FireEventExecute);
         }
 
         private View1DM dataModel = new View1DM();
@@ -23,7 +25,7 @@
             {
                 if (dataModel.Id != value)
                 {
-                    int i = this.GetHashCode();
+                    int i = GetHashCode();
                     dataModel.Id = value;
                     NotifyPropertyChanged("Id");
                 }
@@ -53,6 +55,29 @@
                     dataModel.Message = value;
                     NotifyPropertyChanged("Message");
                 }
+            }
+        }
+
+        // Command to fire event
+        private ICommand fireEventCommand;
+        public ICommand FireEventCommand
+        {
+            get { return fireEventCommand; }
+            set { fireEventCommand = value; }
+        }
+        private void FireEventExecute(object msg)
+        {
+            OnView1VMEvent();
+        }
+
+        public event EventHandler<View1VMEventArgs> View1VMEvent;
+        private void OnView1VMEvent()
+        {
+            var handler = View1VMEvent;
+
+            if (handler != null)
+            {
+                handler(this, new View1VMEventArgs(this));
             }
         }
     }

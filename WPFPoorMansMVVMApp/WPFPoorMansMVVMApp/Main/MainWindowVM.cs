@@ -14,6 +14,12 @@
         {
             btn1Command = new RelayCommand(Btn1Execute, param => Btn1CanExecute);
             btn2Command = new RelayCommand(Btn2Execute, param => Btn2CanExecute);
+            view1.View1VMEvent += View1_View1VMEvent;
+        }
+
+        private void View1_View1VMEvent(object sender, View1VMEventArgs e)
+        {
+            MessageBox.Show("MainWndow: View1 Event was fired");
         }
 
         private MainWindowDM dataModel = new MainWindowDM();

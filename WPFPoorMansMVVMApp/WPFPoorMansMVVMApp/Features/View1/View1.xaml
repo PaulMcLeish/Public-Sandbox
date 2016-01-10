@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -31,5 +32,7 @@
 
         <TextBlock Margin="3" Grid.Row="2" Grid.Column="0" Text="Message:"/>
         <TextBox Margin="3" Grid.Row="2" Grid.Column="1" Text="{Binding Message}"/>
+
+        <Button Margin="3" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Fire Event" Command="{Binding FireEventCommand}"/>
     </Grid>
 </UserControl>
