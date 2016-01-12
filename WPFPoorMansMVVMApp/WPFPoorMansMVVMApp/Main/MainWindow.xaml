@@ -141,7 +141,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 
                 <!-- Button 1 -->
@@ -172,6 +173,13 @@
                     Command="{Binding Btn2Command}"
                     Content="Btn 2"
                     ToolTip="Ctrl+2" />
+
+                <Button
+                    Margin="3"
+                    Grid.Column="4"
+                    Command="{Binding View4Command}"
+                    Content="View 4"
+                    ToolTip="Open View 4" />
             </Grid>
         </GroupBox>
     </Grid>

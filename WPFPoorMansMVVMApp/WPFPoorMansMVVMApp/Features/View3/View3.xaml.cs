@@ -37,8 +37,8 @@ namespace WPFPoorMansMVVMApp.Features.View3
         /// <param name="e"></param>
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.viewModel = new View3VM();
-            this.DataContext = this.viewModel;
+            viewModel = new View3VM();
+            DataContext = viewModel;
         }
     }
 }

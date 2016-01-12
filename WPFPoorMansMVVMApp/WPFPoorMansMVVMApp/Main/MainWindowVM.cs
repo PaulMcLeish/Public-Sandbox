@@ -4,6 +4,7 @@
     using Common;
     using Features.View1;
     using Features.View2;
+    using Features.View4;
     using Helpers;
     using System.Windows.Input;
     using System.Windows;
@@ -14,6 +15,7 @@
         {
             btn1Command = new RelayCommand(Btn1Execute, param => Btn1CanExecute);
             btn2Command = new RelayCommand(Btn2Execute, param => Btn2CanExecute);
+            view4Command = new RelayCommand(View4Execute, param => View4CanExecute);
 
             // Catch event triggered in Child
             view1.View1VMEvent += View1_View1VMEvent;
@@ -131,6 +133,33 @@
         public void Btn2Execute()
         {
             MessageBox.Show(String.Format("Btn2Execute"));
+        }
+
+        private ICommand view4Command;
+        public ICommand View4Command
+        {
+            get { return view4Command; }
+            set { view4Command = value; }
+        }
+
+        private bool view4CanExecute = true;
+        public bool View4CanExecute
+        {
+            get { return view4CanExecute; }
+            set
+            {
+                if (view4CanExecute != value)
+                {
+                    view4CanExecute = value;
+                    NotifyPropertyChanged("View4CanExecute");
+                }
+            }
+        }
+
+        public void View4Execute()
+        {
+            var dialog = new View4();
+            dialog.ShowDialog();
         }
     }
 }

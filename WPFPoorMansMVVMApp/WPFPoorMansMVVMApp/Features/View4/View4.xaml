@@ -1,0 +1,62 @@
+﻿<Window
+    x:Class="WPFPoorMansMVVMApp.Features.View4.View4"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPFPoorMansMVVMApp.Features.View4"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+    Margin="3"
+    >
+    <Window.DataContext>
+        <!-- Set DataContext to ViewModel -->
+        <local:View4VM />
+    </Window.DataContext>
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Margin="3" Grid.Row="0" Grid.Column="0" Text="Id:"/>
+        <TextBox Margin="3" Grid.Row="0" Grid.Column="1" Text="{Binding Id, StringFormat={}{0:#,#}}"/>
+
+        <TextBlock Margin="3" Grid.Row="1" Grid.Column="0" Text="Some Double:"/>
+        <TextBox Margin="3" Grid.Row="1" Grid.Column="1" Text="{Binding SomeDouble, StringFormat={}{0:F5}}"/>
+
+        <TextBlock Margin="3" Grid.Row="2" Grid.Column="0" Text="Message:"/>
+        <TextBox Margin="3" Grid.Row="2" Grid.Column="1" Text="{Binding Message}"/>
+
+        <Expander Margin="3" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="List" BorderThickness="2" BorderBrush="Black" IsExpanded="True">
+            <StackPanel Margin="3" Orientation="Vertical">
+                <StackPanel Margin="3" Orientation="Horizontal">
+                    <Button Content="Add" Command="{Binding AddCommand}" />
+                    <Button Content="Delete" Command="{Binding DeleteCommand}" />
+                    <Button Content="Undo" Command="{Binding UndoCommand}" />
+                    <Button Content="Redo" Command="{Binding RedoCommand}" />
+                </StackPanel>
+                <DataGrid
+                    Margin="3"
+                    x:Name="dgTestList"
+                    CanUserAddRows="True"
+                    CanUserDeleteRows="True"
+                    CanUserReorderColumns="True"
+                    CanUserResizeColumns="True"
+                    AutoGenerateColumns="True"
+                    ItemsSource="{Binding TestList}"
+                    SelectedItem="{Binding SelectedTestItem}"
+                >
+                </DataGrid>
+
+            </StackPanel>
+                
+            
+        </Expander>
+    </Grid>
+</Window>
