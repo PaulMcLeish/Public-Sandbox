@@ -15,3 +15,4 @@
 1. Binding to Commands in View Model
 1. Binding Key Gestures to Commands
 1. Bubble events from Child to Parent
+1. Add partial implementation of simple Undo/Redo in View4 using Actions
