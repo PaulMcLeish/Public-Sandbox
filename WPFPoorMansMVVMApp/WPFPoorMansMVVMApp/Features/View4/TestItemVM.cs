@@ -10,20 +10,18 @@
 
     public class TestItemVM : BaseVM
     {
+        // TODO: Fire Event: ItemChanged on prop change - To be caught by parent for undo/redo
         private TestItemDM dataModel;
-        IList<Action> undoActions;
 
         private TestItemVM() { }
         public TestItemVM(TestItemDM dataModel, IList<Action> undoActions = null)
         {
             this.dataModel = dataModel;
-            this.undoActions = undoActions;
         }
 
-        public TestItemVM(TestItemVM vm, IList<Action> undoActions = null)
+        public TestItemVM(TestItemVM vm)
         {
             this.dataModel = new TestItemDM() { Id = vm.Id, Message = vm.Message, SomeDouble = vm.SomeDouble };
-            this.undoActions = undoActions;
         }
 
         public int Id
@@ -33,11 +31,6 @@
             {
                 if (dataModel.Id != value)
                 {
-                    if (undoActions != null)
-                    {
-                        var oldValue = dataModel.Id;
-                        undoActions.Add(new Action(() => { dataModel.Id = oldValue; }));
-                    }
                     dataModel.Id = value;
                     NotifyPropertyChanged("Id");
                 }
@@ -51,11 +44,6 @@
             {
                 if (Math.Abs(dataModel.SomeDouble - value) > Constants.TOLERANCE)
                 {
-                    if (undoActions != null)
-                    {
-                        var oldValue = dataModel.SomeDouble;
-                        undoActions.Add(new Action(() => { dataModel.SomeDouble = oldValue; }));
-                    }
                     dataModel.SomeDouble = value;
                     NotifyPropertyChanged("SomeDouble");
                 }
@@ -69,11 +57,6 @@
             {
                 if (!string.Equals(dataModel.Message, value, StringComparison.CurrentCulture))
                 {
-                    if (undoActions != null)
-                    {
-                        var oldValue = dataModel.Message;
-                        undoActions.Add(new Action(() => { dataModel.Message = oldValue; }));
-                    }
                     dataModel.Message = value;
                     NotifyPropertyChanged("Message");
                 }

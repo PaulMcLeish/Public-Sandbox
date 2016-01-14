@@ -27,8 +27,8 @@ namespace WPFPoorMansMVVMApp.Features.View4
             get { return dataModel; }
         }
 
-        private IList<Action> undoActions = new List<Action>();
-        private IList<Action> redoActions = new List<Action>();
+        private IList<IList<Action>> undoActions = new List<IList<Action>>(); // Each Entry will contain 2 actions [0]: Undo, [1]: Redo
+        private IList<IList<Action>> redoActions = new List<IList<Action>>(); // Each Entry will contain 2 actions [0]: Undo, [1]: Redo
 
         private ObservableCollection<TestItemVM> obsTestList = new ObservableCollection<TestItemVM>();
         public ObservableCollection<TestItemVM> TestList
@@ -54,20 +54,25 @@ namespace WPFPoorMansMVVMApp.Features.View4
             {
                 if (dataModel.Id != value)
                 {
-                    {
-                        var oldValue = dataModel.Id;
+                    #region undo/redo
+                    var oldValue = dataModel.Id;
 
-                        undoActions.Add(new Action(() =>
-                        {
-                            dataModel.Id = oldValue;
-                            NotifyPropertyChanged("Id");
-                            redoActions.Add(new Action(() =>
-                            {
-                                dataModel.Id = value;
-                                NotifyPropertyChanged("Id");
-                            }));
-                        }));
-                    }
+                    var undo = new Action(() =>
+                    {
+                        dataModel.Id = oldValue;
+                        NotifyPropertyChanged("Id");
+
+                    });
+
+                    var redo = new Action(() =>
+                    {
+                        dataModel.Id = value;
+                        NotifyPropertyChanged("Id");
+                    });
+
+                    undoActions.Add(new List<Action>() { undo, redo });
+                    #endregion undo/redo
+
                     dataModel.Id = value;
                     NotifyPropertyChanged("Id");
                 }
@@ -81,19 +86,24 @@ namespace WPFPoorMansMVVMApp.Features.View4
             {
                 if (Math.Abs(dataModel.SomeDouble - value) > Constants.TOLERANCE)
                 {
+                    #region undo/redo
+                    var oldValue = dataModel.SomeDouble;
+
+                    var undo = new Action(() =>
                     {
-                        var oldValue = dataModel.SomeDouble;
-                        undoActions.Add(new Action(() => 
-                        {
-                            dataModel.SomeDouble = oldValue;
-                            NotifyPropertyChanged("SomeDouble");
-                            redoActions.Add(new Action(() =>
-                            {
-                                dataModel.SomeDouble = value;
-                                NotifyPropertyChanged("SomeDouble");
-                            }));
-                        }));
-                    }
+                        dataModel.SomeDouble = oldValue;
+                        NotifyPropertyChanged("SomeDouble");
+                    });
+
+                    var redo = new Action(() =>
+                    {
+                        dataModel.SomeDouble = value;
+                        NotifyPropertyChanged("SomeDouble");
+                    });
+
+                    undoActions.Add(new List<Action>() { undo, redo });
+                    #endregion undo/redo
+
                     dataModel.SomeDouble = value;
                     NotifyPropertyChanged("SomeDouble");
                 }
@@ -107,19 +117,24 @@ namespace WPFPoorMansMVVMApp.Features.View4
             {
                 if (dataModel.Message != value)
                 {
+                    #region undo/redo
+                    var oldValue = dataModel.Message;
+
+                    var undo = new Action(() =>
                     {
-                        var oldValue = dataModel.Message;
-                        undoActions.Add(new Action(() =>
-                        {
-                            dataModel.Message = oldValue;
-                            NotifyPropertyChanged("Message");
-                            redoActions.Add(new Action(() =>
-                            {
-                                dataModel.Message = value;
-                                NotifyPropertyChanged("Message");
-                            }));
-                        }));
-                    }
+                        dataModel.Message = oldValue;
+                        NotifyPropertyChanged("Message");
+                    });
+
+                    var redo = new Action(() =>
+                    {
+                        dataModel.Message = value;
+                        NotifyPropertyChanged("Message");
+                    });
+
+                    undoActions.Add(new List<Action>() { undo, redo });
+                    #endregion undo/redo
+
                     dataModel.Message = value;
                     NotifyPropertyChanged("Message");
                 }
@@ -143,8 +158,11 @@ namespace WPFPoorMansMVVMApp.Features.View4
             var action = undoActions.LastOrDefault();
             if (action != null)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(action);
+                var undo = action.First();
+                var redo = action.Last();
+                Dispatcher.CurrentDispatcher.BeginInvoke(undo);
                 undoActions.Remove(action);
+                redoActions.Add(new List<Action>() { undo, redo });
             }
         }
 
@@ -160,8 +178,11 @@ namespace WPFPoorMansMVVMApp.Features.View4
             var action = redoActions.LastOrDefault();
             if (action != null)
             {
-                Dispatcher.CurrentDispatcher.BeginInvoke(action);
+                var undo = action.First();
+                var redo = action.Last();
+                Dispatcher.CurrentDispatcher.BeginInvoke(redo);
                 redoActions.Remove(action);
+                undoActions.Add(new List<Action>() { undo, redo });
             }
         }
 
@@ -185,10 +206,27 @@ namespace WPFPoorMansMVVMApp.Features.View4
         public void AddExecute()
         {
             var dm = new TestItemDM() { Id = Id, Message = Message, SomeDouble = SomeDouble };
-            var vm = new TestItemVM(dm, undoActions);
+            var vm = new TestItemVM(dm);
+            var hashCode = vm.GetHashCode();
+
+            #region undo/redo
+            var oldValue = dataModel.Message;
+
+            var undo = new Action(() =>
+            {
+                var deleteMe = obsTestList.FirstOrDefault(x => x.GetHashCode() == hashCode);
+                obsTestList.Remove(deleteMe);
+            });
+
+            var redo = new Action(() =>
+            {
+                obsTestList.Add(vm);
+            });
+
+            undoActions.Add(new List<Action>() { undo, redo });
+            #endregion undo/redo
 
             obsTestList.Add(vm);
-            undoActions.Add(new Action(() => { obsTestList.Remove(vm); }));
         }
 
         private ICommand deleteCommand;
@@ -205,10 +243,28 @@ namespace WPFPoorMansMVVMApp.Features.View4
 
         public void DeleteExecute()
         {
-            var vm = new TestItemVM(SelectedTestItem, undoActions);
+            var dm = new TestItemDM() { Id = this.SelectedTestItem.Id, SomeDouble = this.SelectedTestItem.SomeDouble, Message = this.SelectedTestItem.Message };
+            var vm = new TestItemVM(dm);
+            var hashCode = vm.GetHashCode();
+
+            #region undo/redo
+            var oldValue = dataModel.Message;
+
+            var undo = new Action(() =>
+            {
+                obsTestList.Add(vm);
+            });
+
+            var redo = new Action(() =>
+            {
+                var deleteMe = obsTestList.FirstOrDefault(x => x.GetHashCode() == hashCode);
+                obsTestList.Remove(deleteMe);
+            });
+
+            undoActions.Add(new List<Action>() { undo, redo });
+            #endregion undo/redo
 
             obsTestList.Remove(SelectedTestItem);
-            undoActions.Add(new Action(() => { obsTestList.Add(vm); }));
         }
     }
 }
