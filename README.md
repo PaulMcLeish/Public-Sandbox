@@ -15,4 +15,5 @@
 1. Binding to Commands in View Model
 1. Binding Key Gestures to Commands
 1. Bubble events from Child to Parent
-1. Add partial implementation of simple Undo/Redo in View4 using Actions
+1. Add implementation of simple Undo/Redo in View4 using Actions
+1.1 Undo/Redo works for all property edits in View UI TextBoxes and Datagrid and Adding/Deleting from Datagrid
