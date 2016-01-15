@@ -207,6 +207,7 @@ namespace WPFPoorMansMVVMApp.Features.View4
         {
             var dm = new TestItemDM() { Id = Id, Message = Message, SomeDouble = SomeDouble };
             var vm = new TestItemVM(dm);
+            vm.TestItemPropChanged += OnTestItemPropChanged;
             var hashCode = vm.GetHashCode();
 
             #region undo/redo
@@ -227,6 +228,11 @@ namespace WPFPoorMansMVVMApp.Features.View4
             #endregion undo/redo
 
             obsTestList.Add(vm);
+        }
+
+        private void OnTestItemPropChanged(object sender, TestItemPropChangedArgs e)
+        {
+            undoActions.Add(e.UndoActions);
         }
 
         private ICommand deleteCommand;

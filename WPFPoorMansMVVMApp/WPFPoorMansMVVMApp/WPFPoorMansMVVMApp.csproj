@@ -98,6 +98,7 @@
     <Compile Include="Features\View3\View3DM.cs" />
     <Compile Include="Features\View3\View3VM.cs" />
     <Compile Include="Features\View4\TestItemDM.cs" />
+    <Compile Include="Features\View4\TestItemPropChangedArgs.cs" />
     <Compile Include="Features\View4\TestItemVM.cs" />
     <Compile Include="Features\View4\View4.xaml.cs" />
     <Compile Include="Features\View4\View4DM.cs" />
