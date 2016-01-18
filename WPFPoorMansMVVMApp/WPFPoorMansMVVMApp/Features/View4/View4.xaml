@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -53,10 +54,29 @@
                     SelectedItem="{Binding SelectedTestItem}"
                 >
                 </DataGrid>
-
             </StackPanel>
-                
-            
+           
+        </Expander>
+
+        <Expander Margin="3" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="ItemsControl List" BorderThickness="2" BorderBrush="Black" IsExpanded="True">
+            <ItemsControl Margin="3" Grid.IsSharedSizeScope="True" ItemsSource="{Binding TestList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="3" Orientation="Horizontal">
+                            <Grid Margin="3" ShowGridLines="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="IdCol" Width="Auto" />
+                                    <ColumnDefinition SharedSizeGroup="SomeDoubleCol" Width="Auto" />
+                                    <ColumnDefinition SharedSizeGroup="MessageCol" Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="3" Grid.Column="0" Text="{Binding Id}"/>
+                                <TextBlock Margin="3" Grid.Column="1" Text="{Binding SomeDouble}"/>
+                                <TextBlock Margin="3" Grid.Column="2" Text="{Binding Message}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Expander>
     </Grid>
 </Window>
