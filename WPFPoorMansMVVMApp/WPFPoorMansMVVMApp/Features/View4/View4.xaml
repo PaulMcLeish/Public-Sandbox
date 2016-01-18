@@ -36,12 +36,12 @@
 
         <Expander Margin="3" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="List" BorderThickness="2" BorderBrush="Black" IsExpanded="True">
             <StackPanel Margin="3" Orientation="Vertical">
-                <StackPanel Margin="3" Orientation="Horizontal">
-                    <Button Content="Add" Command="{Binding AddCommand}" />
-                    <Button Content="Delete" Command="{Binding DeleteCommand}" />
-                    <Button Content="Undo" Command="{Binding UndoCommand}" />
-                    <Button Content="Redo" Command="{Binding RedoCommand}" />
-                </StackPanel>
+                <UniformGrid Margin="3" Columns="4">
+                    <Button Margin="3" Content="Add" Command="{Binding AddCommand}" />
+                    <Button Margin="3" Content="Delete" Command="{Binding DeleteCommand}" />
+                    <Button Margin="3" Content="Undo" Command="{Binding UndoCommand}" />
+                    <Button Margin="3" Content="Redo" Command="{Binding RedoCommand}" />
+                </UniformGrid>
                 <DataGrid
                     Margin="3"
                     x:Name="dgTestList"
