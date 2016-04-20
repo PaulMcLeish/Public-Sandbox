@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts, Version=0.6.7.0, Culture=neutral, PublicKeyToken=d1901e6ed2eb0532, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.0.6.7.0\lib\net452\LiveCharts.dll</HintPath>
+      <HintPath>packages\LiveCharts.0.6.7.0\lib\net452\LiveCharts.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -111,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LiveChartsPattern\Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +125,10 @@
     </Compile>
     <Compile Include="Common\BaseVM.cs" />
     <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="LiveChartsPattern\LagTest.cs" />
+    <Compile Include="LiveChartsPattern\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\MainVm.cs" />
     <Compile Include="Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
