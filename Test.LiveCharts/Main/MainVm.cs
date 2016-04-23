@@ -13,6 +13,7 @@ namespace Test.LiveCharts.Main
         public Func<double, string> DateFormatter { get; set; }
         private LineSeries minSeries;
         private LineSeries maxSeries;
+        private LineSeries periodSeries;
 
         private double maxStrain = 1100;
         private double minStrain = 700;
@@ -21,6 +22,48 @@ namespace Test.LiveCharts.Main
         public ObservablePt MinRight { get; set; }
         public ObservablePt MaxLeft { get; set; }
         public ObservablePt MaxRight { get; set; }
+
+        public ObservablePt SOSBottom { get; set; }
+        public ObservablePt SOSTop { get; set; }
+
+        private double start = 9;
+        public double Start
+        {
+            get { return this.start; }
+            set
+            {
+                this.start = value;
+                NotifyPropertyChanged(() => Start);
+                SOS = DateTime.Today.AddHours(Start);
+
+            }
+        }
+
+        private double period = 3.5;
+        public double Period
+        {
+            get { return this.period; }
+            set
+            {
+                this.period = value;
+                NotifyPropertyChanged(() => Period);
+                SOSBottom.DateTime = SOS.AddHours(Period);
+                SOSTop.DateTime = SOS.AddHours(Period);
+            }
+        }
+
+        private DateTime sos;
+        public DateTime SOS
+        {
+            get { return sos; }
+            set
+            {
+                sos = value;
+                NotifyPropertyChanged(() => SOS);
+                SOSBottom.DateTime = SOS.AddHours(Period);
+                SOSTop.DateTime = SOS.AddHours(Period);
+            }
+        }
 
         public MainVm()
         {
@@ -43,10 +86,13 @@ namespace Test.LiveCharts.Main
 
             set
             {
-                maxStrain = value;
-                NotifyPropertyChanged(() => MaxStrain);
-                this.MaxLeft.Data = maxStrain;
-                this.MaxRight.Data = maxStrain;
+                if (value > MinStrain)
+                {
+                    maxStrain = value;
+                    NotifyPropertyChanged(() => MaxStrain);
+                    this.MaxLeft.Data = maxStrain;
+                    this.MaxRight.Data = maxStrain;
+                }
             }
         }
 
@@ -59,10 +105,13 @@ namespace Test.LiveCharts.Main
 
             set
             {
-                minStrain = value;
-                NotifyPropertyChanged(() => MinStrain);
-                this.MinLeft.Data = minStrain;
-                this.MinRight.Data = minStrain;
+                if (value < MaxStrain)
+                {
+                    minStrain = value;
+                    NotifyPropertyChanged(() => MinStrain);
+                    this.MinLeft.Data = minStrain;
+                    this.MinRight.Data = minStrain;
+                }
             }
         }
 
@@ -82,13 +131,18 @@ namespace Test.LiveCharts.Main
             // Do Data Initialisation here
             var bot = DateTime.Today;
             var eot = bot.AddDays(1);
+            SOSBottom = new ObservablePt() { DateTime = SOS.AddHours(Start + Period), Data = 0 };
+            SOSTop = new ObservablePt() { DateTime = SOS.AddHours(Start + Period), Data = 3000 };
+
+            Start = 9;
+            Period = 2.5;
 
             MaxLeft = new ObservablePt() { DateTime = bot, Data = this.MaxStrain };
             MaxRight = new ObservablePt() { DateTime = eot, Data = this.MaxStrain };
             MinLeft = new ObservablePt() { DateTime = bot, Data = this.MinStrain };
             MinRight = new ObservablePt() { DateTime = eot, Data = this.MinStrain };
 
-            DateFormatter = val => DateTime.FromOADate(val).ToString("M");
+            DateFormatter = val => DateTime.FromOADate(val).ToString("T");
 
             // we create a new SeriesCollection
             //create some LineSeries
@@ -114,9 +168,21 @@ namespace Test.LiveCharts.Main
                 StrokeDashArray = new DoubleCollection { 2 }, //make it dashed
             };
 
+            periodSeries = new LineSeries
+            {
+                Title = "EOS",
+                Values = new ChartValues<ObservablePt> { SOSBottom, SOSTop },
+                Fill = Brushes.Transparent,
+                Configuration = new SeriesConfiguration<ObservablePt>().X(pt => pt.DateTime.ToOADate()).Y(pt => pt.Data),
+                Stroke = Brushes.Yellow,
+                StrokeThickness = 1,
+                StrokeDashArray = new DoubleCollection { 2 }, //make it dashed
+            };
+
             //add series to SeriesCollection
             Series.Add(maxSeries);
             Series.Add(minSeries);
+            Series.Add(periodSeries);
         }
     }
 }

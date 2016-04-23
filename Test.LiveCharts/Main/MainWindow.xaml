@@ -34,12 +34,16 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label Content="Min" />
-            <TextBox Text="{Binding MinStrain}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding MinStrain, StringFormat=N3}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
             <Label Content="Max" />
-            <TextBox Text="{Binding MaxStrain}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding MaxStrain, StringFormat=N3}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+            <Label Content="Surgery Start" />
+            <TextBox Text="{Binding Start, StringFormat=N3}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+            <Label Content="Surgery Time" />
+            <TextBox Text="{Binding Period, StringFormat=N3}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
         </StackPanel>
         
-        <lvc:LineChart Grid.Row="2" LegendLocation="None" Series="{Binding Series}" LineSmoothness="1" DisableAnimations="False">
+        <lvc:LineChart Grid.Row="2" LegendLocation="None" Series="{Binding Series}" LineSmoothness="1" DisableAnimations="False" Background="Black">
             <lvc:LineChart.AxisY>
                 <lvc:Axis Title="Newtons" MinValue="50" MaxValue="1800" />
             </lvc:LineChart.AxisY>
