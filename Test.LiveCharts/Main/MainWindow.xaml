@@ -27,23 +27,24 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label Content="Min" />
             <TextBox Text="{Binding MinStrain}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
             <Label Content="Max" />
             <TextBox Text="{Binding MaxStrain}" MinWidth="100" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
         </StackPanel>
         
-        <lvc:LineChart Grid.Row="1" LegendLocation="None" Series="{Binding Series}" LineSmoothness="1" DisableAnimations="False">
+        <lvc:LineChart Grid.Row="2" LegendLocation="None" Series="{Binding Series}" LineSmoothness="1" DisableAnimations="False">
             <lvc:LineChart.AxisY>
                 <lvc:Axis Title="Newtons" MinValue="50" MaxValue="1800" />
             </lvc:LineChart.AxisY>
             <lvc:LineChart.AxisX>
-                <lvc:Axis Title="Time (s)" MinValue="0" MaxValue="20000"/>
+                <lvc:Axis Title="Time (s)" LabelFormatter="{Binding DateFormatter}"/>
             </lvc:LineChart.AxisX>
         </lvc:LineChart>
     </Grid>

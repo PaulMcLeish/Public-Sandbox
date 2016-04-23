@@ -124,6 +124,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\BaseVM.cs" />
+    <Compile Include="Common\ObservablePt.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="LiveChartsPattern\LagTest.cs" />
     <Compile Include="LiveChartsPattern\Window1.xaml.cs">

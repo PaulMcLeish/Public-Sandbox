@@ -10,12 +10,17 @@ namespace Test.LiveCharts.Main
         private RelayCommand windowClosedCmd;
         private RelayCommand windowLoadedCmd;
         private SeriesCollection series = new SeriesCollection();
+        public Func<double, string> DateFormatter { get; set; }
         private LineSeries minSeries;
         private LineSeries maxSeries;
 
         private double maxStrain = 1100;
         private double minStrain = 700;
 
+        public ObservablePt MinLeft { get; set; }
+        public ObservablePt MinRight { get; set; }
+        public ObservablePt MaxLeft { get; set; }
+        public ObservablePt MaxRight { get; set; }
 
         public MainVm()
         {
@@ -40,16 +45,8 @@ namespace Test.LiveCharts.Main
             {
                 maxStrain = value;
                 NotifyPropertyChanged(() => MaxStrain);
-                Series.Remove(maxSeries);
-                maxSeries = new LineSeries
-                {
-                    Title = "Max",
-                    Values = new ChartValues<double> { 0, 20000 },
-                    Fill = Brushes.Transparent,
-                    Configuration = new SeriesConfiguration<double>().X(val => val).Y(val => this.MaxStrain),
-                    Stroke = Brushes.Red
-                };
-                Series.Add(maxSeries);
+                this.MaxLeft.Data = maxStrain;
+                this.MaxRight.Data = maxStrain;
             }
         }
 
@@ -64,16 +61,8 @@ namespace Test.LiveCharts.Main
             {
                 minStrain = value;
                 NotifyPropertyChanged(() => MinStrain);
-                Series.Remove(minSeries);
-                minSeries = new LineSeries
-                {
-                    Title = "Min",
-                    Values = new ChartValues<double> { 0, 20000 },
-                    Fill = Brushes.Transparent,
-                    Configuration = new SeriesConfiguration<double>().X(val => val).Y(val => this.MinStrain),
-                    Stroke = Brushes.Red
-                };
-                Series.Add(minSeries);
+                this.MinLeft.Data = minStrain;
+                this.MinRight.Data = minStrain;
             }
         }
 
@@ -91,25 +80,38 @@ namespace Test.LiveCharts.Main
         private void OnWindowLoaded(object obj)
         {
             // Do Data Initialisation here
+            var bot = DateTime.Today;
+            var eot = bot.AddDays(1);
+
+            MaxLeft = new ObservablePt() { DateTime = bot, Data = this.MaxStrain };
+            MaxRight = new ObservablePt() { DateTime = eot, Data = this.MaxStrain };
+            MinLeft = new ObservablePt() { DateTime = bot, Data = this.MinStrain };
+            MinRight = new ObservablePt() { DateTime = eot, Data = this.MinStrain };
+
+            DateFormatter = val => DateTime.FromOADate(val).ToString("M");
 
             // we create a new SeriesCollection
             //create some LineSeries
             maxSeries = new LineSeries
             {
                 Title = "Max",
-                Values = new ChartValues<double> { 0, 20000 },
+                Values = new ChartValues<ObservablePt> { MaxLeft, MaxRight },
                 Fill = Brushes.Transparent,
-                Configuration = new SeriesConfiguration<double>().X( val => val).Y(val => this.MaxStrain),
-                Stroke = Brushes.Red
+                Configuration = new SeriesConfiguration<ObservablePt>().X( pt => pt.DateTime.ToOADate()).Y(pt => pt.Data),
+                Stroke = Brushes.Red,
+                StrokeThickness = 1,
+                StrokeDashArray = new DoubleCollection { 2 }, //make it dashed
             };
 
             minSeries = new LineSeries
             {
                 Title = "Min",
-                Values = new ChartValues<double> { 0, 20000 },
+                Values = new ChartValues<ObservablePt> { MinLeft, MinRight },
                 Fill = Brushes.Transparent,
-                Configuration = new SeriesConfiguration<double>().X(val => val).Y(val => this.MinStrain),
-                Stroke = Brushes.Red
+                Configuration = new SeriesConfiguration<ObservablePt>().X(pt => pt.DateTime.ToOADate()).Y(pt => pt.Data),
+                Stroke = Brushes.Red,
+                StrokeThickness = 1,
+                StrokeDashArray = new DoubleCollection { 2 }, //make it dashed
             };
 
             //add series to SeriesCollection
