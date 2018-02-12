@@ -1,9 +1,12 @@
 ﻿<Application x:Class="WPFCaliburnApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WPFCaliburnApp"
-             xmlns:autofac="clr-namespace:WPFCaliburnApp.Autofac"
-             >
+             xmlns:autofac="clr-namespace:WPFCaliburnApp.Autofac">
+    
+    <!-- 
+        ** Must install NuGet package: Expression.Blend.Sdk for System.Windows.Interactivity 
+    -->
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
