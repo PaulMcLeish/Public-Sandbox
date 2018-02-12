@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFCaliburnApp.Main;
+﻿using WPFCaliburnApp.Main;
 
 namespace WPFCaliburnApp.Autofac
 {
@@ -22,7 +17,7 @@ namespace WPFCaliburnApp.Autofac
         /// <summary> Initializes a new instance of the <see cref="AppBootstrapper" /> class. </summary>
         public AppBootstrapper()
         {
-            this.Initialize();
+            Initialize();
         }
 
         #endregion
@@ -54,16 +49,16 @@ namespace WPFCaliburnApp.Autofac
         {
             base.Configure();
 
-            this.CreateWindowManager = () => new WindowManager();
-            this.CreateEventAggregator = () => new EventAggregator();
+            CreateWindowManager = () => new WindowManager();
+            CreateEventAggregator = () => new EventAggregator();
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new MainAutofacModule());
 
-            builder.Register(c => this.CreateWindowManager()).InstancePerLifetimeScope();
-            builder.Register(c => this.CreateEventAggregator()).InstancePerLifetimeScope();
+            builder.Register(c => CreateWindowManager()).InstancePerLifetimeScope();
+            builder.Register(c => CreateEventAggregator()).InstancePerLifetimeScope();
 
-            this.ConfigureContainer(builder);
+            ConfigureContainer(builder);
             Container = builder.Build();
         }
 
